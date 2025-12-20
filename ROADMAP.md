@@ -406,4 +406,4 @@ Want to help implement these features? Check [CONTRIBUTING.md](CONTRIBUTING.md)!
 ---
 
 **Last updated**: 2025-11-06
-**Maintainer**: @zxcnoname666
+**Maintainer**: @loli669
