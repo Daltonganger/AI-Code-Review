@@ -460,7 +460,7 @@ Contributors are recognized in:
 
 Have questions about contributing?
 
-- Open a [Discussion](https://github.com/zxcnoname666/AI-Code-Review/discussions)
+- Open a [Discussion](https://github.com/loli669/AI-Code-Review/discussions)
 - Comment on existing issues
 - Reach out to maintainers
 

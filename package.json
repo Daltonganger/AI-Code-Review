@@ -1,5 +1,5 @@
 {
-  "name": "@zxcnoname666/ai-code-review",
+  "name": "@loli669/ai-code-review",
   "version": "1.0.0",
   "description": "Advanced AI-powered code review tool for GitHub with deep code analysis, multi-language support, and beautiful statistics",
   "main": "dist/out.js",
@@ -20,7 +20,7 @@
     "typescript",
     "automation"
   ],
-  "author": "zxcnoname666",
+  "author": "loli669",
   "license": "MIT",
   "dependencies": {
     "@actions/core": "^1.10.1",
