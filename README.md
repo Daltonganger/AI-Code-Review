@@ -2,9 +2,9 @@
 
 <div align="center">
 
-[![GitHub stars](https://img.shields.io/github/stars/loli669/AI-Code-Review?style=social)](https://github.com/loli669/AI-Code-Review/stargazers)
-[![GitHub forks](https://img.shields.io/github/forks/loli669/AI-Code-Review?style=social)](https://github.com/loli669/AI-Code-Review/network/members)
-[![GitHub issues](https://img.shields.io/github/issues/loli669/AI-Code-Review)](https://github.com/loli669/AI-Code-Review/issues)
+[![GitHub stars](https://img.shields.io/github/stars/zxcloli666/AI-Code-Review?style=social)](https://github.com/zxcloli666/AI-Code-Review/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/zxcloli666/AI-Code-Review?style=social)](https://github.com/zxcloli666/AI-Code-Review/network/members)
+[![GitHub issues](https://img.shields.io/github/issues/zxcloli666/AI-Code-Review)](https://github.com/zxcloli666/AI-Code-Review/issues)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![GitHub Action](https://img.shields.io/badge/GitHub-Action-blue?logo=github-actions)](https://github.com/marketplace/actions)
 
@@ -114,7 +114,7 @@ jobs:
           fetch-depth: 0  # Important for commit history analysis
 
       - name: Run AI Code Review
-        uses: loli669/AI-Code-Review@v1
+        uses: zxcloli666/AI-Code-Review@v1
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
@@ -261,7 +261,7 @@ Now comment `/review` on any PR to trigger a review!
 ### Use Claude Opus 4
 
 ```yaml
-- uses: loli669/AI-Code-Review@v1
+- uses: zxcloli666/AI-Code-Review@v1
   with:
     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     OPENAI_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
@@ -272,7 +272,7 @@ Now comment `/review` on any PR to trigger a review!
 ### Use Google Gemini 2.5 Pro
 
 ```yaml
-- uses: loli669/AI-Code-Review@v1
+- uses: zxcloli666/AI-Code-Review@v1
   with:
     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     OPENAI_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
@@ -284,7 +284,7 @@ Now comment `/review` on any PR to trigger a review!
 ### Use OpenAI O3 Reasoning Model
 
 ```yaml
-- uses: loli669/AI-Code-Review@v1
+- uses: zxcloli666/AI-Code-Review@v1
   with:
     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
@@ -295,7 +295,7 @@ Now comment `/review` on any PR to trigger a review!
 ### Reviews in Russian
 
 ```yaml
-- uses: loli669/AI-Code-Review@v1
+- uses: zxcloli666/AI-Code-Review@v1
   with:
     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
@@ -305,7 +305,7 @@ Now comment `/review` on any PR to trigger a review!
 ### Silent Mode (Reduce Notifications)
 
 ```yaml
-- uses: loli669/AI-Code-Review@v1
+- uses: zxcloli666/AI-Code-Review@v1
   with:
     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
@@ -449,7 +449,7 @@ English, Russian, Spanish, French, German, Chinese, Japanese, Korean, Portuguese
 ### Setup
 
 ```bash
-git clone https://github.com/loli669/AI-Code-Review.git
+git clone https://github.com/zxcloli666/AI-Code-Review.git
 cd AI-Code-Review
 pnpm install
 pnpm build
@@ -521,15 +521,15 @@ MIT License - see [LICENSE](LICENSE) for details.
 
 If you find AI Code Review useful, please:
 - ⭐ **Star this repository**
-- 🐛 [Report bugs or request features](https://github.com/loli669/AI-Code-Review/issues)
+- 🐛 [Report bugs or request features](https://github.com/zxcloli666/AI-Code-Review/issues)
 - 🔀 Share with your team
-- 💬 [Join discussions](https://github.com/loli669/AI-Code-Review/discussions)
+- 💬 [Join discussions](https://github.com/zxcloli666/AI-Code-Review/discussions)
 
 ---
 
 <div align="center">
 
-**Made with ❤️ by [loli669](https://github.com/loli669)**
+**Made with ❤️ by [zxcloli666](https://github.com/zxcloli666)**
 
 [⬆ Back to top](#-ai-code-review---github-action-with-deep-static-analysis)
 
@@ -537,11 +537,11 @@ If you find AI Code Review useful, please:
 
 <img src="https://count.getloli.com/get/@AI-Code-Review">
 
- <a href="https://github.com/loli669/AI-Code-Review">
+ <a href="https://github.com/zxcloli666/AI-Code-Review">
   <picture>
-   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=loli669/AI-Code-Review&type=date&theme=dark" />
-   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=loli669/AI-Code-Review&type=date" />
-   <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=loli669/AI-Code-Review&type=date" />
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=zxcloli666/AI-Code-Review&type=date&theme=dark" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=zxcloli666/AI-Code-Review&type=date" />
+   <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=zxcloli666/AI-Code-Review&type=date" />
   </picture>
  </a>
 </div>
