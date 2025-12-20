@@ -14,7 +14,7 @@ The security of AI Code Review is a top priority. If you discover a security vul
 **1. Report Privately**
 
 Contact us directly at:
-- **GitHub Security Advisories**: [Report a vulnerability](https://github.com/loli669/AI-Code-Review/security/advisories/new) (preferred)
+- **GitHub Security Advisories**: [Report a vulnerability](https://github.com/zxcloli666/AI-Code-Review/security/advisories/new) (preferred)
 
 **2. Include Details**
 
@@ -253,11 +253,11 @@ We recognize security researchers who help improve AI Code Review's security:
 ## 📞 Contact
 
 **Security Team:**
-- GitHub: [@loli669](https://github.com/loli669)
+- GitHub: [@zxcloli666](https://github.com/zxcloli666)
 
-**For general questions:** Open a [Discussion](https://github.com/loli669/AI-Code-Review/discussions)
+**For general questions:** Open a [Discussion](https://github.com/zxcloli666/AI-Code-Review/discussions)
 
-**For bugs (non-security):** Open an [Issue](https://github.com/loli669/AI-Code-Review/issues)
+**For bugs (non-security):** Open an [Issue](https://github.com/zxcloli666/AI-Code-Review/issues)
 
 ## 📜 Disclosure Policy
 
@@ -284,4 +284,4 @@ This security policy may be updated periodically. Check this page for the latest
 
 Thank you for helping keep AI Code Review and its users safe! Your responsible disclosure helps protect the entire community.
 
-If you have suggestions for improving this security policy, please open a [Discussion](https://github.com/loli669/AI-Code-Review/discussions).
+If you have suggestions for improving this security policy, please open a [Discussion](https://github.com/zxcloli666/AI-Code-Review/discussions).
