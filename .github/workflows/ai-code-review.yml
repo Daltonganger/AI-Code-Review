@@ -6,6 +6,7 @@ on:
 
 jobs:
   review:
+    if: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -17,9 +18,10 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          persist-credentials: false
 
       - name: Run AI Code Review
-        uses: Daltonganger/AI-Code-Review@v1.4.4
+        uses: Daltonganger/AI-Code-Review@ed52091141746a26591bd9e25edc6ccbcf7dc6ef
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           AI_PROVIDER: 'codex'
