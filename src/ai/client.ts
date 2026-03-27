@@ -263,21 +263,26 @@ async function callOpenAI(
       const timeoutId = setTimeout(() => abortController.abort(), REQUEST_TIMEOUT);
 
       try {
+        const requestBody: Record<string, unknown> = {
+          model: config.model,
+          messages,
+          temperature: 0.3, // Lower temperature for more focused, consistent reviews
+          max_tokens: MAX_TOKENS,
+          tools,
+          tool_choice: 'auto', // Let model decide when to use tools
+        };
+
+        if (config.provider !== 'codex') {
+          requestBody.top_p = 0.95;
+        }
+
         const response = await fetch(url, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${config.apiKey}`,
           },
-          body: JSON.stringify({
-            model: config.model,
-            messages,
-            temperature: 0.3, // Lower temperature for more focused, consistent reviews
-            max_tokens: MAX_TOKENS,
-            top_p: 0.95,
-            tools,
-            tool_choice: 'auto', // Let model decide when to use tools
-          }),
+          body: JSON.stringify(requestBody),
           signal: abortController.signal,
         });
 
