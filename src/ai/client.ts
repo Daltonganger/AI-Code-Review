@@ -69,7 +69,7 @@ function getProviderConfig(config: ReviewConfig): OpenAIConfig {
     return {
       provider: 'codex',
       apiKey: config.codexApiKey,
-      model: config.codexApiModel || 'gpt-5',
+      model: config.codexApiModel || 'gpt-5.4',
       baseUrl: config.codexApiBaseUrl || 'https://api.openai.com/v1',
     };
   }

@@ -41,7 +41,7 @@ inputs:
   CODEX_API_MODEL:
     description: 'Codex model to use when AI_PROVIDER=codex'
     required: false
-    default: 'gpt-5'
+    default: 'gpt-5.4'
 
   CODEX_API_BASE_URL:
     description: 'Codex API base URL when AI_PROVIDER=codex'
