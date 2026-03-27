@@ -104,6 +104,11 @@ We will:
 with:
   OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
 
+# ✅ CORRECT - Use Codex secrets when AI_PROVIDER=codex
+with:
+  AI_PROVIDER: 'codex'
+  CODEX_API_KEY: ${{ secrets.CODEX_API_KEY }}
+
 # ❌ WRONG - Never hardcode
 with:
   OPENAI_API_KEY: 'sk-...'
@@ -136,7 +141,7 @@ on:
 
 **GitHub Repository Secrets:**
 1. Navigate to Settings → Secrets and variables → Actions
-2. Add `OPENAI_API_KEY` as repository secret
+2. Add `OPENAI_API_KEY` or `CODEX_API_KEY` as repository secret
 3. Never commit secrets to the repository
 4. Rotate keys regularly (recommended: every 90 days)
 5. Use read-only tokens when possible

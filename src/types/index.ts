@@ -6,9 +6,13 @@
 
 export interface ReviewConfig {
   githubToken: string;
+  aiProvider?: 'openai' | 'codex';
   openaiApiKey?: string;
   openaiApiModel?: string;
   openaiApiBaseUrl?: string;
+  codexApiKey?: string;
+  codexApiModel?: string;
+  codexApiBaseUrl?: string;
   reviewLanguage: string;
   silentMode: boolean;
   maxChunkSize: number;

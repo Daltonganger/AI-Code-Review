@@ -26,9 +26,13 @@ async function run(): Promise<void> {
 
     const config: ReviewConfig = {
       githubToken: getInput('GITHUB_TOKEN', { required: true }),
+      aiProvider: (getInput('AI_PROVIDER') || 'openai') as 'openai' | 'codex',
       openaiApiKey: getInput('OPENAI_API_KEY'),
       openaiApiModel: getInput('OPENAI_API_MODEL') || 'gpt-5',
       openaiApiBaseUrl: getInput('OPENAI_API_BASE_URL') || 'https://api.openai.com/v1',
+      codexApiKey: getInput('CODEX_API_KEY'),
+      codexApiModel: getInput('CODEX_API_MODEL') || 'gpt-5',
+      codexApiBaseUrl: getInput('CODEX_API_BASE_URL') || 'https://api.openai.com/v1',
       reviewLanguage: getInput('REVIEW_LANGUAGE') || 'en',
       silentMode: getInput('SILENT_MODE') === 'true',
       maxChunkSize: parseInt(getInput('MAX_CHUNK_SIZE') || '6000', 10),
@@ -38,7 +42,12 @@ async function run(): Promise<void> {
       severityThreshold: (getInput('SEVERITY_THRESHOLD') || 'warning') as any,
     };
 
-    info(`Model: ${config.openaiApiModel}`);
+    const activeModel = config.aiProvider === 'codex'
+      ? config.codexApiModel || 'gpt-5'
+      : config.openaiApiModel || 'gpt-5';
+
+    info(`Provider: ${config.aiProvider}`);
+    info(`Model: ${activeModel}`);
     info(`Language: ${config.reviewLanguage}`);
     info(`Silent Mode: ${config.silentMode}`);
     info(`AST Analysis: ${config.enableAST}`);
@@ -135,16 +144,21 @@ async function run(): Promise<void> {
     // ====== 5. Perform AI Review ======
     startGroup('🤖 AI Code Review');
 
-    if (!config.openaiApiKey) {
-      warning('No OpenAI API key provided. Skipping AI review.');
-      info('Please provide OPENAI_API_KEY input to enable AI-powered code review.');
+    const missingKeyInput = config.aiProvider === 'codex' ? 'CODEX_API_KEY' : 'OPENAI_API_KEY';
+    const hasProviderKey = config.aiProvider === 'codex'
+      ? Boolean(config.codexApiKey)
+      : Boolean(config.openaiApiKey);
+
+    if (!hasProviderKey) {
+      warning(`No ${config.aiProvider} API key provided. Skipping AI review.`);
+      info(`Please provide ${missingKeyInput} input to enable AI-powered code review.`);
 
       await postSilentComment(
         octokit,
         owner,
         repo,
         pullNumber,
-        '⚠️ **AI Code Review Skipped**\n\nNo OpenAI API key provided. Please configure the action to enable AI-powered code review.'
+        `⚠️ **AI Code Review Skipped**\n\nNo ${config.aiProvider} API key provided. Please configure \`${missingKeyInput}\` to enable AI-powered code review.`
       );
 
       return;

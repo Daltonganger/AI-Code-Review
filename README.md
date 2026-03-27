@@ -9,7 +9,7 @@
 [![GitHub Action](https://img.shields.io/badge/GitHub-Action-blue?logo=github-actions)](https://github.com/marketplace/actions)
 
 **Automated AI-powered code review for GitHub Pull Requests**  
-*GPT-5 • Claude Opus 4 • Gemini 2.5 Pro • O3 • Custom AI Models*
+*GPT-5 • Codex • Claude Opus 4 • Gemini 2.5 Pro • O3 • Custom AI Models*
 
 [🚀 Quick Start](#-quick-start) • [✨ Features](#-key-features) • [📖 Documentation](#-configuration-options) • [💡 Examples](#-example-reviews) • [🤝 Contributing](#-contributing)
 
@@ -27,7 +27,7 @@
 ✅ **Catch bugs before production** with deep analysis  
 ✅ **Consistent quality standards** across your team  
 ✅ **Support for 10+ programming languages**  
-✅ **Works with GPT-5, Claude 4, Gemini, O3, and custom AI models**  
+✅ **Works with GPT-5, Codex, Claude 4, Gemini, O3, and custom AI models**  
 ✅ **AST parsing + Linter integration + Dependency analysis**
 
 ---
@@ -61,6 +61,7 @@
 
 ### 🤖 **Multi-Model Support**
 - **OpenAI**: GPT-5, GPT-5-High, O3, O3-Mini
+- **Codex**: Native Codex provider support via the official OpenAI API
 - **Anthropic**: Claude Opus 4, Claude Sonnet 4
 - **Google**: Gemini 2.5 Pro, Gemini 2.5 Flash
 - **Custom Endpoints**: Azure OpenAI, AWS Bedrock, local models, or any OpenAI-compatible API
@@ -140,7 +141,9 @@ That's it! 🎉 AI Code Review will automatically analyze every new PR.
 | Input | Description | Default |
 |-------|-------------|---------|
 | `GITHUB_TOKEN` | GitHub token (auto-provided by Actions) | - |
+| `AI_PROVIDER` | Provider to use (`openai` or `codex`) | `openai` |
 | `OPENAI_API_KEY` | OpenAI API key or compatible provider | - |
+| `CODEX_API_KEY` | Codex API key when `AI_PROVIDER=codex` | - |
 
 ### Optional Inputs
 
@@ -148,6 +151,8 @@ That's it! 🎉 AI Code Review will automatically analyze every new PR.
 |-------|-------------|---------|
 | `OPENAI_API_MODEL` | AI model (`gpt-5`, `claude-opus-4`, `o3`, etc.) | `gpt-5` |
 | `OPENAI_API_BASE_URL` | Custom endpoint (Azure, Bedrock, local) | `https://api.openai.com/v1` |
+| `CODEX_API_MODEL` | Codex model when `AI_PROVIDER=codex` | `gpt-5` |
+| `CODEX_API_BASE_URL` | Codex base URL when `AI_PROVIDER=codex` | `https://api.openai.com/v1` |
 | `REVIEW_LANGUAGE` | Review language (`en`, `ru`, `es`, `fr`, `de`, `zh`, etc.) | `en` |
 | `SILENT_MODE` | Minimize email notifications (`true`/`false`) | `false` |
 | `MAX_CHUNK_SIZE` | Max tokens per chunk (adjust for your model) | `6000` |
@@ -159,6 +164,17 @@ That's it! 🎉 AI Code Review will automatically analyze every new PR.
 ---
 
 ## 💡 Example Reviews
+
+### Use Codex Natively
+
+```yaml
+- uses: zxcloli666/AI-Code-Review@v1
+  with:
+    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    AI_PROVIDER: 'codex'
+    CODEX_API_KEY: ${{ secrets.CODEX_API_KEY }}
+    CODEX_API_MODEL: 'gpt-5'
+```
 
 <details>
 <summary>🔍 Click to see example review output</summary>

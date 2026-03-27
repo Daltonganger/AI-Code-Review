@@ -15,8 +15,17 @@ inputs:
     description: 'GitHub token for API access'
     required: true
 
+  AI_PROVIDER:
+    description: 'AI provider to use (openai or codex)'
+    required: false
+    default: 'openai'
+
   OPENAI_API_KEY:
     description: 'OpenAI API key for AI-powered code review'
+    required: false
+
+  CODEX_API_KEY:
+    description: 'Codex API key for native Codex provider support'
     required: false
 
   OPENAI_API_MODEL:
@@ -26,6 +35,16 @@ inputs:
 
   OPENAI_API_BASE_URL:
     description: 'OpenAI API base URL (for custom endpoints or proxies)'
+    required: false
+    default: 'https://api.openai.com/v1'
+
+  CODEX_API_MODEL:
+    description: 'Codex model to use when AI_PROVIDER=codex'
+    required: false
+    default: 'gpt-5'
+
+  CODEX_API_BASE_URL:
+    description: 'Codex API base URL when AI_PROVIDER=codex'
     required: false
     default: 'https://api.openai.com/v1'
 
