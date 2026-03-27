@@ -11,6 +11,7 @@ import { AI_TOOLS, executeTool, type ToolContext } from './tools-registry.js';
  * OpenAI API configuration
  */
 interface OpenAIConfig {
+  provider: 'openai' | 'codex';
   apiKey: string;
   model: string;
   baseUrl: string;
@@ -59,6 +60,32 @@ const INITIAL_RETRY_DELAY = 2000; // 2 seconds
 const MAX_RETRY_DELAY = 16000; // 16 seconds
 const REQUEST_TIMEOUT = 60000; // 60 seconds
 
+function getProviderConfig(config: ReviewConfig): OpenAIConfig {
+  if (config.aiProvider === 'codex') {
+    if (!config.codexApiKey) {
+      throw new Error('Codex API key is required for Codex review');
+    }
+
+    return {
+      provider: 'codex',
+      apiKey: config.codexApiKey,
+      model: config.codexApiModel || 'gpt-5',
+      baseUrl: config.codexApiBaseUrl || 'https://api.openai.com/v1',
+    };
+  }
+
+  if (!config.openaiApiKey) {
+    throw new Error('OpenAI API key is required for AI review');
+  }
+
+  return {
+    provider: 'openai',
+    apiKey: config.openaiApiKey,
+    model: config.openaiApiModel || 'gpt-5',
+    baseUrl: config.openaiApiBaseUrl || 'https://api.openai.com/v1',
+  };
+}
+
 /**
  * Perform AI code review with tool support
  */
@@ -69,15 +96,7 @@ export async function performAIReview(
   workdir: string,
   allFiles?: FileChange[]
 ): Promise<string> {
-  if (!config.openaiApiKey) {
-    throw new Error('OpenAI API key is required for AI review');
-  }
-
-  const aiConfig: OpenAIConfig = {
-    apiKey: config.openaiApiKey,
-    model: config.openaiApiModel || 'gpt-5',
-    baseUrl: config.openaiApiBaseUrl || 'https://api.openai.com/v1',
-  };
+  const aiConfig = getProviderConfig(config);
 
   const toolContext: ToolContext = {
     workdir,
@@ -87,6 +106,7 @@ export async function performAIReview(
   };
 
   info('🤖 Starting AI code review...');
+  info(`Provider: ${aiConfig.provider}`);
   info(`Model: ${aiConfig.model}`);
   info(`Files to review: ${files.length}`);
   if (allFiles && allFiles.length > files.length) {
@@ -266,13 +286,13 @@ async function callOpenAI(
         if (!response.ok) {
           const error = await response.text();
           // Don't retry API errors (4xx, 5xx)
-          throw new Error(`OpenAI API error (${response.status}): ${error}`);
+          throw new Error(`${config.provider} API error (${response.status}): ${error}`);
         }
 
         const data = await response.json() as OpenAIResponse;
 
         if (!data.choices || !data.choices[0] || !data.choices[0].message) {
-          throw new Error('Invalid response format from OpenAI API');
+          throw new Error(`Invalid response format from ${config.provider} API`);
         }
 
         const message = data.choices[0].message;
@@ -333,9 +353,9 @@ async function callOpenAI(
 
       // If not retryable or out of retries, throw error
       if (error.cause) {
-        throw new Error(`Network error calling OpenAI: ${error.message} (${error.cause})`);
+        throw new Error(`Network error calling ${config.provider}: ${error.message} (${error.cause})`);
       }
-      throw new Error(`Failed to call OpenAI API: ${error.message}`);
+      throw new Error(`Failed to call ${config.provider} API: ${error.message}`);
     }
   }
 
@@ -436,17 +456,10 @@ export async function generateSummary(
   fullReview: string,
   config: ReviewConfig
 ): Promise<string> {
-  if (!config.openaiApiKey) {
-    throw new Error('OpenAI API key is required for summary generation');
-  }
-
-  const aiConfig: OpenAIConfig = {
-    apiKey: config.openaiApiKey,
-    model: config.openaiApiModel || 'gpt-5',
-    baseUrl: config.openaiApiBaseUrl || 'https://api.openai.com/v1',
-  };
+  const aiConfig = getProviderConfig(config);
 
   info('📝 Generating concise summary...');
+  info(`Summary provider: ${aiConfig.provider}`);
 
   const language = config.reviewLanguage || 'en';
   const langInstruction = language !== 'en'
