@@ -151,7 +151,7 @@ That's it! 🎉 AI Code Review will automatically analyze every new PR.
 |-------|-------------|---------|
 | `OPENAI_API_MODEL` | AI model (`gpt-5`, `claude-opus-4`, `o3`, etc.) | `gpt-5` |
 | `OPENAI_API_BASE_URL` | Custom endpoint (Azure, Bedrock, local) | `https://api.openai.com/v1` |
-| `CODEX_API_MODEL` | Codex model when `AI_PROVIDER=codex` | `gpt-5` |
+| `CODEX_API_MODEL` | Codex model when `AI_PROVIDER=codex` | `gpt-5.4` |
 | `CODEX_API_BASE_URL` | Codex base URL when `AI_PROVIDER=codex` | `https://api.openai.com/v1` |
 | `REVIEW_LANGUAGE` | Review language (`en`, `ru`, `es`, `fr`, `de`, `zh`, etc.) | `en` |
 | `SILENT_MODE` | Minimize email notifications (`true`/`false`) | `false` |
@@ -173,7 +173,35 @@ That's it! 🎉 AI Code Review will automatically analyze every new PR.
     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     AI_PROVIDER: 'codex'
     CODEX_API_KEY: ${{ secrets.CODEX_API_KEY }}
-    CODEX_API_MODEL: 'gpt-5'
+    CODEX_API_MODEL: 'gpt-5.4'
+```
+
+### Roll Out to Many Repositories
+
+Use `scripts/rollout-daltonganger-repos.sh` to add the Codex workflow to multiple repositories owned by `Daltonganger`.
+
+Dry-run:
+
+```bash
+scripts/rollout-daltonganger-repos.sh
+```
+
+Apply changes and open PRs:
+
+```bash
+scripts/rollout-daltonganger-repos.sh --apply --create-prs
+```
+
+Apply changes and also set `CODEX_API_KEY` from your local environment:
+
+```bash
+CODEX_API_KEY=your-secret scripts/rollout-daltonganger-repos.sh --apply --set-secret --create-prs
+```
+
+Or enter the secret once interactively without putting it in shell history:
+
+```bash
+bash scripts/rollout-daltonganger-repos.sh --apply --include-forks --set-secret --prompt-secret --create-prs
 ```
 
 <details>
