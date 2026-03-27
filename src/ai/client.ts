@@ -59,6 +59,7 @@ const MAX_RETRIES = 3;
 const INITIAL_RETRY_DELAY = 2000; // 2 seconds
 const MAX_RETRY_DELAY = 16000; // 16 seconds
 const REQUEST_TIMEOUT = 60000; // 60 seconds
+const CODEX_REQUEST_TIMEOUT = 180000; // 180 seconds
 
 function getProviderConfig(config: ReviewConfig): OpenAIConfig {
   if (config.aiProvider === 'codex') {
@@ -311,6 +312,8 @@ function isRetryableError(error: any): boolean {
   const message = error.message?.toLowerCase() || '';
   return (
     message.includes('timeout') ||
+    message.includes('aborted') ||
+    message.includes('abort') ||
     message.includes('fetch failed') ||
     message.includes('network') ||
     message.includes('econnreset') ||
@@ -348,7 +351,8 @@ async function callOpenAI(
     try {
       // Create AbortController for timeout
       const abortController = new AbortController();
-      const timeoutId = setTimeout(() => abortController.abort(), REQUEST_TIMEOUT);
+      const requestTimeout = config.provider === 'codex' ? CODEX_REQUEST_TIMEOUT : REQUEST_TIMEOUT;
+      const timeoutId = setTimeout(() => abortController.abort(), requestTimeout);
 
       try {
         const requestBody: Record<string, unknown> = {
