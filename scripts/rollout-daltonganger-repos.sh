@@ -8,7 +8,7 @@ TEMPLATE_PATH="templates/ai-code-review.codex.yml"
 BRANCH_NAME="chore/add-ai-code-review"
 COMMIT_MESSAGE="chore: add AI code review workflow"
 PR_TITLE="chore: add AI code review workflow"
-ACTION_VERSION="v1.4.2"
+ACTION_VERSION="v1.4.3"
 PR_BODY=$(cat <<EOF
 ## Summary
 - add the shared AI Code Review workflow

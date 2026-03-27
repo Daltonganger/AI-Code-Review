@@ -216,6 +216,94 @@ function sleep(ms: number): Promise<void> {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+function extractLeadingJsonValue(value: string): string | null {
+  const trimmed = value.trim();
+  if (!trimmed) {
+    return null;
+  }
+
+  const opening = trimmed[0];
+  const closing = opening === '{' ? '}' : opening === '[' ? ']' : null;
+  if (!closing) {
+    return null;
+  }
+
+  let depth = 0;
+  let inString = false;
+  let escaped = false;
+
+  for (let i = 0; i < trimmed.length; i++) {
+    const char = trimmed[i];
+
+    if (inString) {
+      if (escaped) {
+        escaped = false;
+      } else if (char === '\\') {
+        escaped = true;
+      } else if (char === '"') {
+        inString = false;
+      }
+      continue;
+    }
+
+    if (char === '"') {
+      inString = true;
+      continue;
+    }
+
+    if (char === opening) {
+      depth++;
+    } else if (char === closing) {
+      depth--;
+      if (depth === 0) {
+        return trimmed.slice(0, i + 1);
+      }
+    }
+  }
+
+  return null;
+}
+
+function parseToolArguments(value: unknown): Record<string, any> {
+  if (!value) {
+    return {};
+  }
+
+  if (typeof value === 'object' && !Array.isArray(value)) {
+    return value as Record<string, any>;
+  }
+
+  if (typeof value !== 'string') {
+    return {};
+  }
+
+  const trimmed = value.trim();
+  if (!trimmed) {
+    return {};
+  }
+
+  try {
+    const parsed = JSON.parse(trimmed);
+    return parsed && typeof parsed === 'object' && !Array.isArray(parsed)
+      ? parsed as Record<string, any>
+      : {};
+  } catch {
+    const extracted = extractLeadingJsonValue(trimmed);
+    if (!extracted) {
+      return {};
+    }
+
+    try {
+      const parsed = JSON.parse(extracted);
+      return parsed && typeof parsed === 'object' && !Array.isArray(parsed)
+        ? parsed as Record<string, any>
+        : {};
+    } catch {
+      return {};
+    }
+  }
+}
+
 /**
  * Check if error is retryable (network/timeout errors, not API errors)
  */
@@ -317,9 +405,7 @@ async function callOpenAI(
         if (message.tool_calls && message.tool_calls.length > 0) {
           const toolCallsJson = message.tool_calls.map((tc: any) => ({
             name: tc.function?.name || tc.name,
-            arguments: typeof tc.function?.arguments === 'string'
-              ? JSON.parse(tc.function.arguments)
-              : (tc.function?.arguments || tc.arguments || {}),
+            arguments: parseToolArguments(tc.function?.arguments || tc.arguments),
           }));
 
           // Format tool calls as JSON block so parseToolCalls can process them
